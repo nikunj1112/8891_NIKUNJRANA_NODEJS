@@ -1,23 +1,30 @@
-import express from 'express';
+import express from "express";
 import verifyToken from "../middlewares/auth_middleware.js";
+
 import {
   createManager,
-  getManagers,
+  getAllManagers,
   deleteManager,
   updateManager,
-  searchManager,
-  paginationManager,
-  multiDelete
+  searchManagers,
+  getManagersWithPagination,
+  deleteMultipleManagers
 } from "../controllers/manager_controller.js";
 
 const router = express.Router();
 
+
 router.post("/", verifyToken, createManager);
-router.get("/", verifyToken, getManagers);
-router.delete("/:id", verifyToken, deleteManager);
+
+router.get("/", verifyToken, getAllManagers);
+router.get("/search", verifyToken, searchManagers);
+router.get("/pagination", verifyToken, getManagersWithPagination);
+
 router.put("/:id", verifyToken, updateManager);
-router.get("/search", verifyToken, searchManager);
-router.get("/pagination", verifyToken, paginationManager);
-router.post("/multi-delete", verifyToken, multiDelete);
+
+router.delete("/:id", verifyToken, deleteManager);
+
+router.post("/multi-delete", verifyToken, deleteMultipleManagers);
+
 
 export default router;
